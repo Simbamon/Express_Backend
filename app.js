@@ -23,7 +23,9 @@ app.get("/getWeatherMinneapolis", (req, res) => {
         weather_url, 
         function(error, response, body) {
             if(!error && response.statusCode == 200) {
-                res.send(body)
+                var parsedBody = JSON.parse(body)
+                var weather = parsedBody.weather[0].main
+                res.send(weather)
             }
         }
     )
