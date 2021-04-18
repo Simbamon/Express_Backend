@@ -1,3 +1,5 @@
 # Express_Backend
 
-Testing backend api using POSTMAN
+Backend api server connected to React_Frontend
+
+(https://github.com/Simbamon/React_Frontend)
