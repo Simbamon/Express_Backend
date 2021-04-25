@@ -6,11 +6,17 @@ const port = 5000
 const path = require('path')
 const fetch = require('node-fetch')
 const { response } = require('express')
+const Datastore =require('nedb')
+
 
 require('dotenv').config({ path: path.resolve(__dirname, './.env') })
 
 const apikey = process.env.API_KEY;
 const weather_url = `http://api.openweathermap.org/data/2.5/weather?q=minneapolis&appid=${apikey}`
+const database = new Datastore('database.db')
+database.loadDatabase()
+database.insert({name: 'simbamon', status: 'cool'})
+database.insert({name: 'simbaman', status: 'nice'})
 
 app.use(express.json())
 
@@ -29,10 +35,15 @@ app.get("/getWeatherMinneapolis", (req, res) => {
 
 app.post('/api', (req, res) => {
   console.log(req.body)
-  const data = req.body;
+  const data = req.body
+  const timestamp = Date.now()
+  data.timestamp = timestamp
+  database.insert(data)
   res.json({
     status: 'sucess',
-    data: data.username + 3
+    timestamp: timestamp,
+    username: data.username,
+    password: data.password,
   })
 })
 
